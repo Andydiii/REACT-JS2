@@ -12,6 +12,7 @@ function App() {
     { input: 'Get the groceries!', complete: false },
     { input: 'Learn how to web design', complete: false },
     { input: 'Say hi to gran gran', complete: true },
+    { input: 'avdcascdad', complete: false },
   ] 
 
 
