@@ -1,4 +1,4 @@
-export function Tabs({todos}) {
+export function Tabs({todos, selectedTab, setSelectedTab}) {
     const tabs = ['All', 'Open', 'Completed'];
     const All = todos.length;
     const Open = todos.filter((todo) => {return !todo.complete}).length;
@@ -16,11 +16,14 @@ export function Tabs({todos}) {
                 return (
                     // we map each of the button name to a button and return a button for each of them 
                     // each of the button needs to have a unique key
-                    <button key={tabIndex} className="tab-button">
+                    <button onClick={() => {
+                        setSelectedTab(tab);
+                    }} key={tabIndex} className={"tab-button " + (tab === selectedTab ? 'tab-selected' : '')} >
                         <h4>{tab} ({numOfTasks})</h4>
                     </button>
                 );
             })}
+            <hr />
         </nav>
     );
 }

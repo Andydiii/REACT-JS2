@@ -1,29 +1,55 @@
 
+import { useState, useEffect } from 'react'
 import { Header } from './components/Header'
 import { Tabs } from './components/Tabs'
 import { TodoInput } from './components/TodoInput'
 import { TodoList } from './components/TodoList'
-
+ 
 function App() {
   // we put todos info here in app as we will need to use props and this to communicate between components
   // e.g. we need pass todos as prop to header to display correct number of open tasks.
-  const todos = [
-    { input: 'Hello! Add your first todo!', complete: true },
-    { input: 'Get the groceries!', complete: false },
-    { input: 'Learn how to web design', complete: false },
-    { input: 'Say hi to gran gran', complete: true },
-    { input: 'avdcascdad', complete: false },
-  ] 
 
 
 
+  const [todos, setTodos] = useState([
+    { input: 'Hello! Add your first todo!', complete: true }
+  ]);
+
+  const [selectedTab, setSelectedTab] = useState('Open');
+
+  function handleAddTodo(newTodoInput) {
+    // we cannot change on the old state "todos", but we can only assign it a new one, 
+    // cerate a duplicate of original array with a new todo added. 
+    const newTodoList = [...todos, { input: newTodoInput, complete: false}]; 
+    setTodos(newTodoList);
+  }
+
+  function handleCompleteTodo(index) {
+    let newTodoList = [...todos];
+    newTodoList[index].complete = true;
+    setTodos(newTodoList);
+  }
+
+  function handleDeleteTodo(index) {
+    let newTodoList = todos.filter((todo, todoIndex) => {
+      // when return is true, keep it.
+      return todoIndex != index;
+    })
+    setTodos(newTodoList);
+  }
+
+
+  useEffect(() => {
+    if (!localStorage || localStorage.getItem('todo-app')) {return;}
+    let db = JSON.parse(localStorage.getItem('todo-app'));
+  }, [])
 
   return (
     <>
       <Header todos={todos} />
-      <Tabs todos={todos} />
-      <TodoList todos={todos} />
-      <TodoInput />
+      <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} todos={todos} />
+      <TodoList handleCompleteTodo={handleCompleteTodo} handleDeleteTodo={handleDeleteTodo} selectedTab={selectedTab} todos={todos} />
+      <TodoInput handleAddTodo={handleAddTodo}/>
     </>
   )
 }
