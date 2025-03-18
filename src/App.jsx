@@ -22,12 +22,14 @@ function App() {
     // cerate a duplicate of original array with a new todo added. 
     const newTodoList = [...todos, { input: newTodoInput, complete: false}]; 
     setTodos(newTodoList);
+    handleSaveData(newTodoList);
   }
 
   function handleCompleteTodo(index) {
     let newTodoList = [...todos];
     newTodoList[index].complete = true;
     setTodos(newTodoList);
+    handleSaveData(newTodoList);
   }
 
   function handleDeleteTodo(index) {
@@ -36,12 +38,18 @@ function App() {
       return todoIndex != index;
     })
     setTodos(newTodoList);
+    handleSaveData(newTodoList);
   }
 
 
+  function handleSaveData(currTodos) {
+    localStorage.setItem('todo-app', JSON.stringify( {todos: currTodos} ));
+  }
+
   useEffect(() => {
-    if (!localStorage || localStorage.getItem('todo-app')) {return;}
+    if (!localStorage || !localStorage.getItem('todo-app')) {return;}
     let db = JSON.parse(localStorage.getItem('todo-app'));
+    setTodos(db.todos);
   }, [])
 
   return (

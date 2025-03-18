@@ -7,9 +7,9 @@ export function TodoList({todos, handleCompleteTodo, selectedTab, handleDeleteTo
     // render the coressponding list of todos based 
     return (
         <>
-            {filterTodosList.map((todo, todoIndex) => {
+            {filterTodosList.map((filteredTodo, todoIndex) => {
                 return (
-                    <TodoCard key = {todoIndex} todoIndex={todoIndex} todo = {todo} handleDeleteTodo={handleDeleteTodo} handleCompleteTodo={handleCompleteTodo}/>
+                    <TodoCard key = {todoIndex} todoIndex={todos.findIndex((todo) => {return (todo.input == filteredTodo.input);})} todo = {filteredTodo} handleDeleteTodo={handleDeleteTodo} handleCompleteTodo={handleCompleteTodo}/>
                 )
             })}
         </>
