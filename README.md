@@ -1,8 +1,3 @@
-# React + Vite
-
-This is for self learning React in deepth.
-
-Will build three projects: 
+# React + Vite + netlify
+ 
 - [To-do list](https://andy-todo-list.netlify.app/)
-- Pokemon
-- coffee statistics
